@@ -13,6 +13,7 @@
             an express grant of patent rights.
 */
 
+#include <Arduino.h>
 #include <SPI.h>
 
 #define pot0            0x11
@@ -22,7 +23,7 @@
 #define pot1Shutdown    0x22
 #define potBothShutdown 0x23
 
-void setPotWiper(unsigned char, unsigned char, unsigned char);
-void setLeftVolume(unsigned char, unsigned char);
-void setRightVolume(unsigned char, unsigned char);
-void setBothVolume(unsigned char, unsigned char);
+void setPotWiper(unsigned char chip_select, unsigned char address, unsigned char pos);
+void setLeftVolume(unsigned char chip_select, unsigned char pos);
+void setRightVolume(unsigned char chip_select, unsigned char pos);
+void setBothVolume(unsigned char chip_select, unsigned char pos);

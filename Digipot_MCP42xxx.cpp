@@ -13,25 +13,28 @@
             an express grant of patent rights.
 */
 
-void setLeftVolume(unsigned char CHIP_SELECT, unsigned char pos) {
+#include <math.h>
+#include <Digipot_MCP42xxx.h>
+
+void setLeftVolume(unsigned char chip_select, unsigned char pos) {
   pos = constrain(pos, 0, 255);   // limit wiper setting to range o 0 to 255
-  setPotWiper(CHIP_SELECT, pot0, pos);
+  setPotWiper(chip_select, pot0, pos);
 }
 
-void setRightVolume(unsigned char CHIP_SELECT, unsigned char pos) {
+void setRightVolume(unsigned char chip_select, unsigned char pos) {
   pos = constrain(pos, 0, 255);   // limit wiper setting to range o 0 to 255
-  setPotWiper(CHIP_SELECT, pot1, pos);
+  setPotWiper(chip_select, pot1, pos);
 }
 
-void setBothVolume(unsigned char CHIP_SELECT, unsigned char pos) {
+void setBothVolume(unsigned char chip_select, unsigned char pos) {
   pos = constrain(pos, 0, 255);   // limit wiper setting to range o 0 to 255
-  setPotWiper(CHIP_SELECT, potBoth, pos);
+  setPotWiper(chip_select, potBoth, pos);
 }
 
-void setPotWiper(unsigned char CHIP_SELECT, unsigned char address, unsigned char pos) {
+void setPotWiper(unsigned char chip_select, unsigned char address, unsigned char pos) {
   pos = constrain(pos, 0, 255);   // limit wiper setting to range o 0 to 255
 
-  digitalWrite(CHIP_SELECT, LOW);   // select chip
+  digitalWrite(chip_select, LOW);   // select chip
 
   // SPISettings mySettting(speedMaximum, dataOrder, dataMode)
   // dataOrder: MSBFIRST or LSBFIRST
@@ -41,7 +44,7 @@ void setPotWiper(unsigned char CHIP_SELECT, unsigned char address, unsigned char
   SPI.transfer(address);   // configure target pot with wiper position
   SPI.transfer(pos);
 
-  digitalWrite(CHIP_SELECT, HIGH);   // deselect chip
+  digitalWrite(chip_select, HIGH);   // deselect chip
 
   SPI.endTransaction();
 }

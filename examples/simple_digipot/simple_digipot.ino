@@ -3,24 +3,21 @@
   File: simple_digipot.ino 
 
   Purpose:  Illustrate invoking this class.
-            This is non-functional.
+            This is not intended to be functionally useful.
 */
 
 #include <Digipot_MCP42xxx.h>
 
-// ---------- Hardware Wiring ----------
-// Same as Griduino platform
-
 // here's the volume control being demonstrated
-// Digipot_MCP42xxx thePot(cs);
 #define cs_pin 8
+Digipot_MCP42xxx thePot(cs_pin);
 
 void setup() {
-  setBothVolume(cs_pin, 0);      // minimum volume
-  setLeftVolume(cs_pin, 128);    // midpoint volume
-  setRightVolume(cs_pin, 255);   // maximum volume
-  setPotWiper(cs_pin, pot0, 66);
-  setPotWiper(cs_pin, pot1, 77);
+  thePot.setBothVolume(0);      // minimum volume
+  thePot.setLeftVolume(128);    // midpoint volume
+  thePot.setRightVolume(255);   // maximum volume
+  thePot.setPotWiper(pot0, 66);
+  thePot.setPotWiper(pot1, 77);
 }
 
 int main() {

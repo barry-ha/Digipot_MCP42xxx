@@ -16,25 +16,25 @@
 #include <math.h>
 #include <Digipot_MCP42xxx.h>
 
-void setLeftVolume(unsigned char chip_select, unsigned char pos) {
-  pos = constrain(pos, 0, 255);   // limit wiper setting to range o 0 to 255
-  setPotWiper(chip_select, pot0, pos);
+void Digipot_MCP42xxx::setLeftVolume(unsigned char pos) {
+  pos = constrain(pos, 0, 255);   // limit wiper setting to 0..255
+  setPotWiper(pot0, pos);
 }
 
-void setRightVolume(unsigned char chip_select, unsigned char pos) {
-  pos = constrain(pos, 0, 255);   // limit wiper setting to range o 0 to 255
-  setPotWiper(chip_select, pot1, pos);
+void Digipot_MCP42xxx::setRightVolume(unsigned char pos) {
+  pos = constrain(pos, 0, 255);   // limit wiper setting to 0..255
+  setPotWiper(pot1, pos);
 }
 
-void setBothVolume(unsigned char chip_select, unsigned char pos) {
-  pos = constrain(pos, 0, 255);   // limit wiper setting to range o 0 to 255
-  setPotWiper(chip_select, potBoth, pos);
+void Digipot_MCP42xxx::setBothVolume(unsigned char pos) {
+  pos = constrain(pos, 0, 255);   // limit wiper setting to 0..255
+  setPotWiper(potBoth, pos);
 }
 
-void setPotWiper(unsigned char chip_select, unsigned char address, unsigned char pos) {
-  pos = constrain(pos, 0, 255);   // limit wiper setting to range o 0 to 255
+void Digipot_MCP42xxx::setPotWiper(unsigned char address, unsigned char pos) {
+  pos = constrain(pos, 0, 255);   // limit wiper setting to 0...255
 
-  digitalWrite(chip_select, LOW);   // select chip
+  digitalWrite(cs, LOW);   // select chip
 
   // SPISettings mySettting(speedMaximum, dataOrder, dataMode)
   // dataOrder: MSBFIRST or LSBFIRST
@@ -44,7 +44,7 @@ void setPotWiper(unsigned char chip_select, unsigned char address, unsigned char
   SPI.transfer(address);   // configure target pot with wiper position
   SPI.transfer(pos);
 
-  digitalWrite(chip_select, HIGH);   // deselect chip
+  digitalWrite(cs, HIGH);   // deselect chip
 
   SPI.endTransaction();
 }

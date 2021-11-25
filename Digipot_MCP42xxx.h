@@ -1,4 +1,4 @@
-#pragma once   // Please format this file with clang before check-in to GitHub
+// Please format this file with clang before check-in to GitHub
 /*
   File:     MCP42xxx.h
 
@@ -12,7 +12,7 @@
             Copyright and license notices must be preserved. Contributors provide 
             an express grant of patent rights.
 */
-
+#pragma once
 #include <Arduino.h>
 #include <SPI.h>
 
@@ -23,7 +23,13 @@
 #define pot1Shutdown    0x22
 #define potBothShutdown 0x23
 
-void setPotWiper(unsigned char chip_select, unsigned char address, unsigned char pos);
-void setLeftVolume(unsigned char chip_select, unsigned char pos);
-void setRightVolume(unsigned char chip_select, unsigned char pos);
-void setBothVolume(unsigned char chip_select, unsigned char pos);
+class Digipot_MCP42xxx {
+public:
+  Digipot_MCP42xxx(unsigned char chip_select_pin) : cs(chip_select_pin) {}
+  unsigned char cs;   // chip select
+
+  void setLeftVolume(unsigned char pos);
+  void setRightVolume(unsigned char pos);
+  void setBothVolume(unsigned char pos);
+  void setPotWiper(unsigned char address, unsigned char pos);
+};

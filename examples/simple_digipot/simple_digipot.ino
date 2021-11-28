@@ -2,23 +2,25 @@
 /*
   File: simple_digipot.ino 
 
-  Purpose:  Illustrate invoking this class.
-            This is not intended to be functionally useful.
+  Purpose:  Illustrate invoking the class and confirm it compiles successfully.
+            This is not intended to be functional or useful.
+
 */
 
-#include <Digipot_MCP42xxx.h>
+#include <Digipot_MCP42xxx.h>   // https://github.com/barry-ha/Digipot_MCP42xxx
 
 // here's the volume control being demonstrated
 #define cs_pin 8
-Digipot_MCP42xxx thePot(cs_pin);
+Digipot_MCP42xxx digipot(cs_pin);
 
 void setup() {
-  thePot.setBothVolume(0);      // minimum volume
-  thePot.setLeftVolume(128);    // midpoint volume
-  thePot.setRightVolume(255);   // maximum volume
-  thePot.setPotWiper(pot0, 66);
-  thePot.setPotWiper(pot1, 77);
+  digipot.setBothVolume(0);      // minimum volume
+  digipot.setLeftVolume(128);    // midpoint volume
+  digipot.setRightVolume(255);   // maximum volume
+
+  digipot.setPotWiper(pot0, 66);
+  digipot.setPotWiper(pot1, 77);
 }
 
-int main() {
+void loop() {
 }

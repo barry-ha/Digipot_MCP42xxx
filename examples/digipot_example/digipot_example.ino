@@ -1,65 +1,52 @@
+// Please format this file with clang before check-in to GitHub
 /*
-  Blink
+  File: digipot_example.ino 
 
-  Turns an LED on for one second, then off for one second, repeatedly.
+  Purpose:  Working example to set various levels in the digipot while 
+            blinking the onboard LED to visually indicate a new setting.
+            Run this to verify the digipot settings with an ohmmeter.
 
-  Most Arduinos have an on-board LED you can control. On the UNO, MEGA and ZERO
-  it is attached to digital pin 13, on MKR1000 on pin 6. LED_BUILTIN is set to
-  the correct LED pin independent of which board is used.
-  If you want to know what pin the on-board LED is connected to on your Arduino
-  model, check the Technical Specs of your board at:
-  https://www.arduino.cc/en/Main/Products
-
-  modified 8 May 2014
-  by Scott Fitzgerald
-  modified 2 Sep 2016
-  by Arturo Guadalupi
-  modified 8 Sep 2016
-  by Colby Newman
-
-  This example code is in the public domain.
-
-  https://www.arduino.cc/en/Tutorial/BuiltInExamples/Blink
 */
 #include <Arduino.h>
 #include <SPI.h>
 #include <math.h>
-#include "Digipot_MCP42xxx.h"
+#include <Digipot_MCP42xxx.h>
 #include <Adafruit_DotStar.h>
-#define NUMPIXELS 1 
-#define DATAPIN    8
-#define CLOCKPIN   6
+
+#define NUMPIXELS 1
+#define DATAPIN   8
+#define CLOCKPIN  6
 Adafruit_DotStar strip(NUMPIXELS, DATAPIN, CLOCKPIN, DOTSTAR_BRG);
- 
 
+// here's the volume control being demonstrated
 #define cs_pin 2
-Digipot_MCP42xxx thePot(cs_pin);
-
+Digipot_MCP42xxx digipot(cs_pin);
 
 void setup() {
-
-// Kill the dotStar (it's too bright)
-  strip.begin(); // Initialize pins for output
+  // turn off the dotStar (it's too bright)
+  strip.begin();   // Initialize pins for output
   strip.setBrightness(0);
-  strip.show();  // Turn all LEDs off ASAP 
+  strip.show();   // Turn all LEDs off ASAP
 
-  // initialize digital pin LED_BUILTIN as an output.
+  // initialize the onboard LED so we can flash it
   pinMode(LED_BUILTIN, OUTPUT);
+
+  // initialize the SPI bus
   pinMode(cs_pin, OUTPUT);
   SPI.begin();
 }
 
 // the loop function runs over and over again forever
 void loop() {
-  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-  thePot.setBothVolume(0);
-  delay(100); 
-  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
+  digipot.setBothVolume(0);   // minimum resistance
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(100);
+  digitalWrite(LED_BUILTIN, LOW);
   delay(900);
-  
-  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-  thePot.setBothVolume(255);
-  delay(100); 
-  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
+
+  digipot.setBothVolume(255);   // maximum resistance
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(100);
+  digitalWrite(LED_BUILTIN, LOW);
   delay(900);
 }

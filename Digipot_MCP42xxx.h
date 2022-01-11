@@ -28,6 +28,8 @@ public:
   Digipot_MCP42xxx(unsigned char chip_select_pin) : cs(chip_select_pin) {}
   unsigned char cs;   // chip select
 
+  void begin();   // init SPI, init chip select pin
+
   void setLeftVolume(unsigned char pos);
   void setRightVolume(unsigned char pos);
   void setBothVolume(unsigned char pos);

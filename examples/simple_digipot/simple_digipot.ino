@@ -14,6 +14,8 @@
 Digipot_MCP42xxx digipot(cs_pin);
 
 void setup() {
+  digipot.begin();   // init SPI, init chip select pin
+
   digipot.setBothVolume(0);      // minimum volume
   digipot.setLeftVolume(128);    // midpoint volume
   digipot.setRightVolume(255);   // maximum volume

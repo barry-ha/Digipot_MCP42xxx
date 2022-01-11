@@ -16,6 +16,11 @@
 #include <math.h>
 #include <Digipot_MCP42xxx.h>
 
+void Digipot_MCP42xxx::begin() {
+  pinMode(cs, OUTPUT);
+  SPI.begin();
+}
+
 void Digipot_MCP42xxx::setLeftVolume(unsigned char pos) {
   pos = constrain(pos, 0, 255);   // limit wiper setting to 0..255
   setPotWiper(pot0, pos);
@@ -36,7 +41,7 @@ void Digipot_MCP42xxx::setPotWiper(unsigned char address, unsigned char pos) {
 
   digitalWrite(cs, LOW);   // select chip
 
-  // SPISettings mySettting(speedMaximum, dataOrder, dataMode)
+  // SPISettings mySetting(speedMaximum, dataOrder, dataMode)
   // dataOrder: MSBFIRST or LSBFIRST
   // dataMode : SPI_MODE0, SPI_MODE1, SPI_MODE2, or SPI_MODE3
   SPI.beginTransaction(SPISettings(1400000, MSBFIRST, SPI_MODE2));

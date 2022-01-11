@@ -9,7 +9,6 @@
 */
 #include <Arduino.h>
 #include <SPI.h>
-#include <math.h>
 #include <Digipot_MCP42xxx.h>
 #include <Adafruit_DotStar.h>
 
@@ -31,9 +30,8 @@ void setup() {
   // initialize the onboard LED so we can flash it
   pinMode(LED_BUILTIN, OUTPUT);
 
-  // initialize the SPI bus
-  pinMode(cs_pin, OUTPUT);
-  SPI.begin();
+  // initialize the SPI bus, and chip select pin
+  digipot.begin();
 }
 
 // the loop function runs over and over again forever

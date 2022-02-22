@@ -18,6 +18,7 @@
 
 void Digipot_MCP42xxx::begin() {
   pinMode(cs, OUTPUT);
+  digitalWrite(cs, HIGH);   // de-select chip
   SPI.begin();
 }
 
@@ -49,6 +50,7 @@ void Digipot_MCP42xxx::setPotWiper(unsigned char address, unsigned char pos) {
   SPI.transfer(address);   // configure target pot with wiper position
   SPI.transfer(pos);
 
+  //delayMicroseconds(1);     // 1 microseconds ~= 1/(1.4 MHz)hold the sample value for the sample time
   digitalWrite(cs, HIGH);   // deselect chip
 
   SPI.endTransaction();
